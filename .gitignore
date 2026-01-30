@@ -7,7 +7,7 @@
 serviceAccountKey.json
 firebase-config.json
 firebase-credentials.json
-*.json
+firebase/config.js
 
 # Java / Maven
 target/
@@ -46,17 +46,12 @@ yarn-error.log*
 Thumbs.db
 *.sublime-project
 *.sublime-workspace
-.project
-.classpath
 .c9/
 *.launch
-.settings/
-*.sublime-workspace
 
 # Build outputs
 dist/
 build/
-*.com
 *.class
 *.dll
 *.exe
@@ -75,8 +70,6 @@ Thumbs.db
 # Logs
 logs/
 *.log
-npm-debug.log*
-lerna-debug.log*
 
 # Runtime data
 pids/
@@ -108,4 +101,3 @@ out/
 
 # Misc
 .vscode-test
-.vscode settings.json
