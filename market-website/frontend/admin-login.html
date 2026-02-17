@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RealMart Admin Panel - Login">
+    <title>Admin Login - RealMart</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/utils.css">
+    <link rel="stylesheet" href="css/admin-styles.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK - Compat version for global access -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="admin-login-page">
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>🏪 RealMart Admin</h1>
+                <p>Admin Login</p>
+            </div>
+            
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        required 
+                        placeholder="admin@realmart.com"
+                        autocomplete="email"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        required 
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                    >
+                </div>
+                
+                <button type="submit" id="loginBtn" class="btn-primary login-btn">
+                    Login
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Not an admin? <a href="index.html">Back to Home</a></p>
+                <p class="forgot-password"><a href="#" onclick="handleForgotPassword(event)">Forgot Password?</a></p>
+            </div>
+            
+            <div id="loginMessage" class="login-message hidden"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/firebase.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/markets.js"></script>
+    <script src="js/schedule.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/admin-login.js"></script>
+</body>
+</html>

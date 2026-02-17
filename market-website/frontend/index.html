@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RealMart - Find market opening hours and operating schedules near you">
+    <title>RealMart - Market Days & Opening Schedule</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/utils.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDK - Compat version for global access -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🏪</span>
+                    <span class="logo-text">RealMart</span>
+                </a>
+            </div>
+            
+            <button class="navbar-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="navbar-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="markets.html" class="nav-link">Browse Markets</a></li>
+                <li><a href="#search" class="nav-link">Search</a></li>
+                <li><a href="admin-login.html" class="nav-link nav-btn">Admin Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Find Market Opening Hours</h1>
+                <p>Discover operating schedules for local markets in your area</p>
+                
+                <!-- Search Bar -->
+                <div class="search-container" id="search">
+                    <form id="searchForm" class="search-form">
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            class="search-input" 
+                            placeholder="Search for a market..."
+                            autocomplete="off"
+                        >
+                        <button type="submit" class="btn-primary">Search</button>
+                    </form>
+                    <ul id="searchSuggestions" class="search-suggestions hidden"></ul>
+                </div>
+            </div>
+            <div class="hero-background"></div>
+        </section>
+
+        <!-- Quick Stats Section -->
+        <section class="stats">
+            <div class="container">
+                <div class="stat-card">
+                    <div class="stat-number" id="statMarkets">0</div>
+                    <div class="stat-label">Markets Listed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Current Hours</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Updated</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Markets Section -->
+        <section class="featured-markets">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Featured Markets</h2>
+                    <p>Popular markets in your area</p>
+                </div>
+                
+                <div id="loadingFeatured" class="loading-spinner hidden"></div>
+                <div id="featuredMarkets" class="markets-grid">
+                    <!-- Featured market cards will be inserted here -->
+                </div>
+                
+                <div class="section-footer">
+                    <a href="markets.html" class="btn-secondary">View All Markets</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Never Miss a Market Day</h2>
+                    <p>Get accurate and up-to-date market opening hours for your favorite local markets</p>
+                    <a href="markets.html" class="btn-large">Explore All Markets</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FutaMart</h3>
+                    <p>Your guide to local market operating hours</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="markets.html">Browse Markets</a></li>
+                        <li><a href="admin-login.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@futamart.com</p>
+                    <p>Phone: (555) 123-4567</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 RealMart. All rights reserved. | ICT303 Group 7 Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/schedule.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/markets.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

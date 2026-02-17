@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View detailed information about a market including hours and location">
+    <title>Market Details - RealMart</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/utils.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDK - Compat version for global access -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🏪</span>
+                    <span class="logo-text">RealMart</span>
+                </a>
+            </div>
+            
+            <button class="navbar-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="navbar-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="markets.html" class="nav-link">Browse Markets</a></li>
+                <li><a href="index.html#search" class="nav-link">Search</a></li>
+                <li><a href="admin-login.html" class="nav-link nav-btn">Admin Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div id="loadingDetails" class="loading-spinner"></div>
+        <div id="notFound" class="not-found hidden">
+            <h2>Market Not Found</h2>
+            <p>The market you're looking for doesn't exist.</p>
+            <a href="markets.html" class="btn-primary">Back to Markets</a>
+        </div>
+
+        <!-- Market Details Section -->
+        <section id="marketDetails" class="market-details hidden">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <div class="container">
+                    <a href="index.html">Home</a>
+                    <span>/</span>
+                    <a href="markets.html">Markets</a>
+                    <span>/</span>
+                    <span id="breadcrumbMarket"></span>
+                </div>
+            </div>
+
+            <!-- Header Section -->
+            <div class="market-header">
+                <img id="marketImage" src="" alt="Market" class="market-header-image">
+                <div class="market-header-overlay">
+                    <div class="container">
+                        <h1 id="marketName"></h1>
+                        <div class="market-status">
+                            <span id="openStatus" class="status-badge"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Section -->
+            <div class="container">
+                <div class="market-content">
+                    <!-- Left Column: Information -->
+                    <div class="market-info-column">
+                        <!-- Basic Info -->
+                        <div class="info-section">
+                            <h2>Information</h2>
+                            <div class="info-item">
+                                <span class="label">📍 Address</span>
+                                <span id="marketAddress" class="value"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">📱 Phone</span>
+                                <a id="marketPhone" href="tel:" class="value"></a>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">📧 Email</span>
+                                <a id="marketEmail" href="mailto:" class="value"></a>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">🌐 Website</span>
+                                <a id="marketWebsite" href="#" target="_blank" class="value"></a>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">📝 Description</span>
+                                <p id="marketDescription" class="value"></p>
+                            </div>
+                        </div>
+
+                        <!-- Opening Hours -->
+                        <div class="info-section">
+                            <h2>Opening Hours</h2>
+                            <div id="scheduleTable" class="schedule-table">
+                                <!-- Schedule table will be inserted here -->
+                            </div>
+                        </div>
+
+                        <!-- Special Hours -->
+                        <div id="specialSection" class="info-section hidden">
+                            <h2>Special Hours</h2>
+                            <div id="specialHours"></div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="action-buttons">
+                            <button id="shareBtn" class="btn-secondary">Share</button>
+                            <button id="bookmarkBtn" class="btn-secondary">Bookmark</button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Map -->
+                    <div class="market-map-column">
+                        <div id="marketMap" class="market-map"></div>
+                    </div>
+                </div>
+
+                <!-- Related Markets -->
+                <div class="related-markets">
+                    <h2>Other Markets in <span id="relatedCity"></span></h2>
+                    <div id="relatedMarketsGrid" class="markets-grid">
+                        <!-- Related market cards will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FutaMart</h3>
+                    <p>Your guide to local market operating hours</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="markets.html">Browse Markets</a></li>
+                        <li><a href="admin-login.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@futamart.com</p>
+                    <p>Phone: (555) 123-4567</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 RealMart. All rights reserved. | ICT303 Group 7 Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h2>Share Market</h2>
+            <div class="share-options">
+                <button id="shareFacebook" class="share-option">Share on Facebook</button>
+                <button id="shareTwitter" class="share-option">Share on Twitter</button>
+                <button id="shareCopy" class="share-option">Copy Link</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/firebase.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/markets.js"></script>
+    <script src="js/schedule.js"></script>
+    <script src="js/main-details.js"></script>
+</body>
+</html>

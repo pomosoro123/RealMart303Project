@@ -1,0 +1,726 @@
+/* ========================================
+   REALMART - Responsive Design
+   ======================================== */
+
+/* ========================================
+   MOBILE FIRST APPROACH
+   Small devices: 320px - 480px
+   ======================================== */
+@media (max-width: 480px) {
+    /* Typography */
+    :root {
+        --font-size-h1: 32px;
+        --font-size-h2: 24px;
+        --font-size-h3: 20px;
+        --font-size-h4: 18px;
+    }
+
+    /* Container */
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+
+    /* Header & Navigation */
+    .header {
+        box-shadow: var(--shadow-md);
+    }
+
+    .navbar {
+        padding: 0;
+    }
+
+    .navbar-brand {
+        flex: 1;
+    }
+
+    .logo {
+        font-size: 18px;
+        gap: var(--spacing-xs);
+    }
+
+    .logo-icon {
+        font-size: 22px;
+    }
+
+    .logo-text {
+        font-size: 16px;
+    }
+
+    .navbar-menu {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        flex-direction: column;
+        background-color: var(--white);
+        box-shadow: var(--shadow-xl);
+        padding: var(--spacing-lg) 0;
+        gap: 0;
+        margin: 0;
+        z-index: 999;
+        overflow-y: auto;
+    }
+
+    .navbar-menu.active {
+        display: flex;
+    }
+
+    .navbar-menu li {
+        width: 100%;
+        margin: 0;
+    }
+
+    .nav-link {
+        display: block;
+        padding: var(--spacing-md) var(--spacing-lg);
+        border-radius: 0;
+        text-align: left;
+        color: var(--gray-700);
+        font-weight: 500;
+        transition: all var(--transition-fast);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        background-color: rgba(46, 204, 113, 0.1);
+        color: var(--primary-color);
+        border-left: 4px solid var(--primary-color);
+        padding-left: calc(var(--spacing-lg) - 4px);
+    }
+
+    .nav-link::after {
+        display: none;
+    }
+
+    .nav-btn {
+        margin: var(--spacing-md) var(--spacing-lg);
+        width: calc(100% - 2 * var(--spacing-lg));
+        text-align: center;
+    }
+
+    .navbar-toggle {
+        display: flex;
+        margin-left: var(--spacing-md);
+    }
+
+    .navbar-toggle:active {
+        background-color: transparent;
+    }
+
+    /* Hero Section */
+    .hero {
+        min-height: 300px;
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 28px;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .hero-content p {
+        font-size: var(--font-size-base);
+    }
+
+    .hero-background {
+        right: -200px;
+        width: 300px;
+        height: 300px;
+    }
+
+    /* Search Form */
+    .search-form {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .search-input,
+    .search-form button {
+        width: 100%;
+    }
+
+    /* Stats Section */
+    .stats {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .stats .container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .stat-card {
+        padding: var(--spacing-lg);
+    }
+
+    /* Featured Markets */
+    .featured-markets {
+        padding: var(--spacing-xl) var(--spacing-sm);
+    }
+
+    .section-header {
+        margin-bottom: var(--spacing-xl);
+    }
+
+    /* Grids */
+    .markets-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    /* Cards */
+    .card {
+        margin-bottom: var(--spacing-md);
+    }
+
+    /* Buttons */
+    .btn-primary,
+    .btn-secondary,
+    .btn-large {
+        width: 100%;
+    }
+
+    /* Modal */
+    .modal-content {
+        width: 95%;
+        padding: var(--spacing-lg);
+    }
+
+    /* Table */
+    .schedule-table {
+        overflow-x: auto;
+    }
+
+    .schedule-table table {
+        font-size: var(--font-size-small);
+    }
+
+    /* Page Header */
+    .page-header {
+        padding: var(--spacing-xl) 0;
+    }
+
+    .page-header h1 {
+        font-size: var(--font-size-h2);
+    }
+
+    /* Stats */
+    .stats {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .stat-card {
+        padding: var(--spacing-md);
+    }
+
+    .stat-number {
+        font-size: var(--font-size-h2);
+    }
+
+    /* Filters */
+    .filters-container {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-input,
+    .filter-select {
+        width: 100%;
+    }
+
+    /* Market Details */
+    .market-content {
+        flex-direction: column;
+    }
+
+    .market-map-column {
+        margin-top: var(--spacing-lg);
+    }
+
+    .market-info-column {
+        order: -1;
+    }
+
+    /* CTA Section */
+    .cta-content {
+        text-align: center;
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .cta-content h2 {
+        font-size: var(--font-size-h3);
+    }
+
+    /* Footer */
+    .footer {
+        padding: var(--spacing-xl) 0 var(--spacing-lg);
+    }
+
+    .social-links {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* ========================================
+   TABLET: 481px - 768px
+   ======================================== */
+@media (min-width: 481px) and (max-width: 768px) {
+    /* Typography */
+    :root {
+        --font-size-h1: 36px;
+        --font-size-h2: 28px;
+        --font-size-h3: 24px;
+    }
+
+    /* Header & Navigation */
+    .logo {
+        font-size: 20px;
+    }
+
+    .logo-icon {
+        font-size: 24px;
+    }
+
+    .navbar-menu {
+        gap: var(--spacing-md);
+    }
+
+    .nav-link {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 14px;
+    }
+
+    .navbar-toggle {
+        display: flex;
+    }
+
+    .navbar-menu {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 999;
+        overflow-y: auto;
+    }
+
+    /* Grids */
+    .markets-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+    }
+
+    /* Hero */
+    .hero {
+        min-height: 400px;
+    }
+
+    .search-form {
+        max-width: 100%;
+    }
+
+    /* Search Form */
+    .search-form {
+        flex-direction: row;
+    }
+
+    .search-input {
+        flex: 1;
+    }
+
+    .search-form button {
+        flex: 0 0 auto;
+    }
+
+    /* Filters */
+    .filters-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+
+    .filter-group button {
+        grid-column: 1 / -1;
+    }
+
+    /* Stats */
+    .stats .container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-lg);
+    }
+
+    /* Market Details */
+    .market-content {
+        grid-template-columns: 1fr;
+    }
+
+    .market-map-column {
+        margin-top: var(--spacing-lg);
+    }
+
+    /* Footer */
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Modal */
+    .modal-content {
+        width: 80%;
+    }
+}
+
+/* ========================================
+   LAPTOP & DESKTOP: 769px - 1440px
+   ======================================== */
+@media (min-width: 769px) {
+    /* Header */
+    .header {
+        box-shadow: var(--shadow-md);
+    }
+
+    .navbar {
+        padding: var(--spacing-md) 0;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .logo-icon {
+        font-size: 28px;
+    }
+
+    .nav-link {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    /* Grids */
+    .markets-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: var(--spacing-lg);
+    }
+
+    /* Navigation - show by default on desktop */
+    .navbar-menu {
+        display: flex !important;
+        gap: var(--spacing-lg);
+        position: static;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        flex-direction: row;
+        bottom: auto;
+    }
+
+    .navbar-toggle {
+        display: none;
+    }
+
+    /* Search Form */
+    .search-form {
+        max-width: 600px;
+    }
+
+    /* Market Details */
+    .market-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-2xl);
+        align-items: start;
+    }
+
+    .market-info-column {
+        order: 1;
+    }
+
+    .market-map-column {
+        order: 2;
+    }
+
+    /* Filters */
+    .filters-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--spacing-md);
+        align-items: end;
+    }
+
+    .filter-group button {
+        grid-column: auto;
+    }
+
+    /* Footer */
+    .footer-content {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ========================================
+   EXTRA LARGE: 1441px+
+   ======================================== */
+@media (min-width: 1441px) {
+    .container {
+        max-width: 1400px;
+    }
+
+    .markets-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    }
+
+    /* Hero section can be taller on large screens */
+    .hero {
+        min-height: 500px;
+    }
+}
+
+/* ========================================
+   PRINT MEDIA
+   ======================================== */
+@media print {
+    header,
+    footer,
+    .navbar,
+    .navbar-toggle,
+    .btn-primary,
+    .btn-secondary,
+    .modal,
+    .loading-spinner {
+        display: none;
+    }
+
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+}
+
+/* ========================================
+   LANDSCAPE MODE FOR MOBILE
+   ======================================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        min-height: 250px;
+    }
+
+    .hero-content h1 {
+        font-size: var(--font-size-h3);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .hero-content p {
+        font-size: var(--font-size-small);
+        margin-bottom: var(--spacing-md);
+    }
+}
+
+/* ========================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ======================================== */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch target sizes */
+    a,
+    button {
+        min-height: 44px;
+        min-width: 44px;
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+
+    /* Remove hover effects on touch devices */
+    .card:hover {
+        box-shadow: var(--shadow-md);
+        transform: none;
+    }
+
+    .nav-link:hover {
+        background-color: rgba(46, 204, 113, 0.1);
+    }
+
+    .btn-primary:hover {
+        transform: none;
+        box-shadow: var(--shadow-md);
+    }
+}
+
+/* ========================================
+   RETINA DISPLAYS (HIGH DPI)
+   ======================================== */
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi) {
+    /* Thinner borders on high-DPI screens */
+    input,
+    select,
+    textarea,
+    .card {
+        border-width: 0.5px;
+    }
+}
+
+/* ========================================
+   DARK MODE SUPPORT (Future Enhancement)
+   ======================================== */
+@media (prefers-color-scheme: dark) {
+    /* This will be implemented in a separate dark-mode.css file */
+}
+
+/* ========================================
+   REDUCED MOTION
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+/* ========================================
+   MARKET DETAILS PAGE RESPONSIVE
+   ======================================== */
+
+/* Mobile (≤480px) */
+@media (max-width: 480px) {
+    .market-header {
+        height: 250px;
+    }
+
+    .market-header-overlay h1 {
+        font-size: var(--font-size-h3);
+    }
+
+    .market-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md) 0;
+    }
+
+    .market-map {
+        height: 300px;
+    }
+
+    .info-section {
+        padding: var(--spacing-md);
+    }
+
+    .info-section h2 {
+        font-size: var(--font-size-h4);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+    }
+
+    .markets-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .action-buttons .btn-secondary {
+        width: 100%;
+    }
+
+    .breadcrumb div {
+        font-size: var(--font-size-xs);
+    }
+}
+
+/* Tablet (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .market-header {
+        height: 300px;
+    }
+
+    .market-header-overlay h1 {
+        font-size: var(--font-size-h2);
+    }
+
+    .market-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+        padding: var(--spacing-lg) 0;
+    }
+
+    .market-map {
+        height: 400px;
+    }
+
+    .info-section {
+        padding: var(--spacing-lg);
+    }
+
+    .markets-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .action-buttons {
+        flex-direction: row;
+    }
+
+    .action-buttons .btn-secondary {
+        flex: 1;
+    }
+}
+
+/* Desktop (≥769px) */
+@media (min-width: 769px) {
+    .market-header {
+        height: 400px;
+    }
+
+    .market-content {
+        grid-template-columns: 2fr 1fr;
+        gap: var(--spacing-xl);
+        padding: var(--spacing-xl) 0;
+    }
+
+    .market-map {
+        height: 500px;
+        position: sticky;
+        top: 100px;
+    }
+
+    .markets-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .action-buttons {
+        flex-direction: row;
+    }
+
+    .action-buttons .btn-secondary {
+        flex: 1;
+        min-width: 150px;
+    }
+}

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RealMart Admin Dashboard">
+    <title>Admin Dashboard - RealMart</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/utils.css">
+    <link rel="stylesheet" href="css/admin-styles.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK - Compat version for global access -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="admin-dashboard">
+    <!-- Sidebar Navigation -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <h2>🏪 RealMart</h2>
+            <p>Admin Panel</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-tab="dashboard" onclick="switchTab(event, 'dashboard')">
+                📊 Dashboard
+            </a>
+            <a href="#" class="nav-item" data-tab="markets" onclick="switchTab(event, 'markets')">
+                🏬 Markets
+            </a>
+            <a href="#" class="nav-item" data-tab="schedules" onclick="switchTab(event, 'schedules')">
+                ⏰ Schedules
+            </a>
+            <a href="#" class="nav-item" data-tab="users" onclick="switchTab(event, 'users')">
+                👥 Users
+            </a>
+            <a href="#" class="nav-item" data-tab="bulk-upload" onclick="switchTab(event, 'bulk-upload')">
+                📤 Bulk Upload
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <p id="adminEmail" class="user-email"></p>
+                <p id="adminRole" class="user-role"></p>
+            </div>
+            <button id="logoutBtn" class="btn-secondary logout-btn">Logout</button>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="admin-main">
+        <div class="admin-header">
+            <h1>Admin Dashboard</h1>
+            <div class="admin-controls">
+                <span id="statusMessage" class="status-message"></span>
+            </div>
+        </div>
+        
+        <!-- Dashboard Tab -->
+        <section id="dashboard-tab" class="tab-content active">
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">🏬</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Total Markets</div>
+                        <div class="stat-value" id="marketCount">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Total Users</div>
+                        <div class="stat-value" id="userCount">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏰</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Schedules Added</div>
+                        <div class="stat-value" id="scheduleCount">0</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-info">
+                        <div class="stat-label">Last Updated</div>
+                        <div class="stat-value" id="lastUpdate">--</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Markets Tab -->
+        <section id="markets-tab" class="tab-content">
+            <div class="tab-header">
+                <h2>Markets Management</h2>
+                <button id="addMarketBtn" class="btn-primary" onclick="openAddMarketModal()">+ Add Market</button>
+            </div>
+            
+            <div id="loadingMarkets" class="loading-spinner hidden"></div>
+            
+            <div class="table-container">
+                <table id="marketsTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marketsTableBody">
+                        <!-- Market rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="noMarkets" class="no-data-message hidden">
+                <p>No markets found. <a href="#" onclick="openAddMarketModal()">Create one now</a></p>
+            </div>
+        </section>
+        
+        <!-- Schedules Tab -->
+        <section id="schedules-tab" class="tab-content">
+            <div class="tab-header">
+                <h2>Schedules Management</h2>
+                <button id="addScheduleBtn" class="btn-primary" onclick="openAddScheduleModal()">+ Add Schedule</button>
+            </div>
+            
+            <div id="loadingSchedules" class="loading-spinner hidden"></div>
+            
+            <div class="table-container">
+                <table id="schedulesTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Market</th>
+                            <th>Day</th>
+                            <th>Hours</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schedulesTableBody">
+                        <!-- Schedule rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="noSchedules" class="no-data-message hidden">
+                <p>No schedules found. <a href="#" onclick="openAddScheduleModal()">Create one now</a></p>
+            </div>
+        </section>
+        
+        <!-- Users Tab -->
+        <section id="users-tab" class="tab-content">
+            <div class="tab-header">
+                <h2>Users Management</h2>
+            </div>
+            
+            <div id="loadingUsers" class="loading-spinner hidden"></div>
+            
+            <div class="table-container">
+                <table id="usersTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- User rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div id="noUsers" class="no-data-message hidden">
+                <p>No users found.</p>
+            </div>
+        </section>
+        
+        <!-- Bulk Upload Tab -->
+        <section id="bulk-upload-tab" class="tab-content">
+            <div class="tab-header">
+                <h2>Bulk Upload Markets</h2>
+            </div>
+            
+            <div class="bulk-upload-container">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📄</div>
+                    <h3>Upload Excel File</h3>
+                    <p>Drag and drop your Excel file here or click to select</p>
+                    <input type="file" id="excelFileInput" accept=".xlsx,.xls" hidden>
+                    <button class="btn-primary" onclick="document.getElementById('excelFileInput').click()">
+                        Choose File
+                    </button>
+                </div>
+                
+                <div id="uploadPreview" class="upload-preview hidden">
+                    <h3>Preview Data</h3>
+                    <div class="preview-controls">
+                        <p id="fileInfo" class="file-info"></p>
+                        <button class="btn-danger btn-small" onclick="resetUpload()">Clear</button>
+                    </div>
+                    <div class="preview-table-container">
+                        <table id="previewTable" class="data-table">
+                            <thead id="previewTableHead"></thead>
+                            <tbody id="previewTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="upload-actions">
+                        <button class="btn-primary" onclick="confirmBulkUpload()">Upload to Database</button>
+                        <button class="btn-secondary" onclick="resetUpload()">Cancel</button>
+                    </div>
+                </div>
+                
+                <div id="uploadStatus" class="upload-status hidden">
+                    <div id="statusContent"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Market Modal -->
+    <div id="marketModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('marketModal')">&times;</button>
+            <h2 id="marketModalTitle">Add Market</h2>
+            <form id="marketForm" class="admin-form">
+                <div class="form-group">
+                    <label for="marketName">Market Name</label>
+                    <input type="text" id="marketName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="marketCity">City</label>
+                        <input type="text" id="marketCity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="marketState">State</label>
+                        <input type="text" id="marketState" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="marketAddress">Address</label>
+                    <input type="text" id="marketAddress" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="marketPhone">Phone</label>
+                        <input type="tel" id="marketPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="marketEmail">Email</label>
+                        <input type="email" id="marketEmail" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="marketWebsite">Website (Optional)</label>
+                    <input type="url" id="marketWebsite">
+                </div>
+                <div class="form-group">
+                    <label for="marketDescription">Description</label>
+                    <textarea id="marketDescription" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="marketLat">Latitude</label>
+                        <input type="number" id="marketLat" step="0.000001">
+                    </div>
+                    <div class="form-group">
+                        <label for="marketLong">Longitude</label>
+                        <input type="number" id="marketLong" step="0.000001">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="marketImageFile">Market Image</label>
+                    <div class="image-upload-container">
+                        <div id="imagePreviewContainer" class="image-preview-container hidden">
+                            <img id="imagePreview" alt="Market Image Preview" class="image-preview">
+                            <button type="button" class="btn-danger btn-small" onclick="clearImageUpload()">Remove Image</button>
+                        </div>
+                        <div id="imageInputContainer" class="image-input-container">
+                            <input type="file" id="marketImageFile" accept="image/*" hidden>
+                            <button type="button" class="btn-secondary" onclick="document.getElementById('marketImageFile').click()">Choose Image</button>
+                            <p class="file-hint">JPG, PNG, GIF - Max 5MB</p>
+                        </div>
+                    </div>
+                    <input type="hidden" id="marketImageData">
+                </div>
+                <button type="submit" class="btn-primary submit-btn">Save Market</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Schedule Modal -->
+    <div id="scheduleModal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('scheduleModal')">&times;</button>
+            <h2 id="scheduleModalTitle">Add Schedule</h2>
+            <form id="scheduleForm" class="admin-form">
+                <div class="form-group">
+                    <label for="scheduleMarket">Market</label>
+                    <select id="scheduleMarket" required>
+                        <option value="">Select a market</option>
+                    </select>
+                </div>
+                <div class="schedule-days">
+                    <!-- Days will be inserted here -->
+                </div>
+                <button type="submit" class="btn-primary submit-btn">Save Schedule</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/markets.js"></script>
+    <script src="js/image-upload.js"></script>
+    <script src="js/schedule.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/admin-markets.js"></script>
+    <script src="js/admin-schedules.js"></script>
+    <script src="js/admin-users.js"></script>
+    <script src="js/admin-bulk-upload.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+</html>

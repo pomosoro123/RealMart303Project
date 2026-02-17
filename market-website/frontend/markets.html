@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse all markets and their opening hours">
+    <title>Browse Markets - RealMart</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/utils.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDK - Compat version for global access -->
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">🏪</span>
+                    <span class="logo-text">RealMart</span>
+                </a>
+            </div>
+            
+            <button class="navbar-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <ul class="navbar-menu" id="navMenu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="markets.html" class="nav-link active">Browse Markets</a></li>
+                <li><a href="index.html#search" class="nav-link">Search</a></li>
+                <li><a href="admin-login.html" class="nav-link nav-btn">Admin Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>All Markets</h1>
+                <p>Explore all markets and their operating hours</p>
+            </div>
+        </section>
+
+        <!-- Filters and Controls Section -->
+        <section class="filters-section">
+            <div class="container">
+                <div class="filters-container">
+                    <!-- Search Input -->
+                    <div class="filter-group">
+                        <input 
+                            type="text" 
+                            id="marketSearch" 
+                            class="filter-input" 
+                            placeholder="Search by market name..."
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <!-- City Filter -->
+                    <div class="filter-group">
+                        <select id="cityFilter" class="filter-select">
+                            <option value="">All Cities</option>
+                            <!-- Options populated from data -->
+                        </select>
+                    </div>
+
+                    <!-- State Filter -->
+                    <div class="filter-group">
+                        <select id="stateFilter" class="filter-select">
+                            <option value="">All States</option>
+                            <!-- Options populated from data -->
+                        </select>
+                    </div>
+
+                    <!-- Sort Options -->
+                    <div class="filter-group">
+                        <select id="sortFilter" class="filter-select">
+                            <option value="name">Sort by Name</option>
+                            <option value="city">Sort by City</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                    </div>
+
+                    <!-- Reset Button -->
+                    <button id="resetFilters" class="btn-secondary">Reset Filters</button>
+                </div>
+
+                <!-- Active Filters Display -->
+                <div id="activeFilters" class="active-filters hidden"></div>
+            </div>
+        </section>
+
+        <!-- Markets Grid -->
+        <section class="markets-section">
+            <div class="container">
+                <div id="loadingMarkets" class="loading-spinner hidden"></div>
+                
+                <div id="noResults" class="no-results hidden">
+                    <p>No markets found matching your filters.</p>
+                    <button onclick="document.getElementById('resetFilters').click()" class="btn-primary">Clear Filters</button>
+                </div>
+
+                <div id="marketsGrid" class="markets-grid">
+                    <!-- Market cards will be inserted here -->
+                </div>
+
+                <!-- Pagination -->
+                <div id="pagination" class="pagination hidden">
+                    <button id="prevPage" class="btn-secondary">← Previous</button>
+                    <span id="pageInfo" class="page-info"></span>
+                    <button id="nextPage" class="btn-secondary">Next →</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FutaMart</h3>
+                    <p>Your guide to local market operating hours</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="markets.html">Browse Markets</a></li>
+                        <li><a href="admin-login.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@futamart.com</p>
+                    <p>Phone: (555) 123-4567</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 RealMart. All rights reserved. | ICT303 Group 7 Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/schedule.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/markets.js"></script>
+    <script src="js/main-markets.js"></script>
+</body>
+</html>
